@@ -3,4 +3,4 @@ services:
     api:
         build: .
         ports:
-            - "5000:8080"
+            - "9000:5000"
