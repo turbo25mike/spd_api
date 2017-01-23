@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Business;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 
 namespace ImageServices.Tests
