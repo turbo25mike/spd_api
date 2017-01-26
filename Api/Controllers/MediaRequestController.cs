@@ -8,7 +8,7 @@ using Microsoft.Practices.Unity;
 
 namespace Api.Controllers
 {
-    [Auth]
+    [Authorize]
     [RoutePrefix("api/request")]
     public class MediaRequestController : ApiController
     {

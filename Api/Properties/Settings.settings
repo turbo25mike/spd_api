@@ -5,5 +5,17 @@
     <Setting Name="DBConnectionString" Type="System.String" Scope="Application">
       <Value Profile="(Default)">test123</Value>
     </Setting>
+    <Setting Name="Environment" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Development</Value>
+    </Setting>
+    <Setting Name="Auth0Domain" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://spd.auth0.com/</Value>
+    </Setting>
+    <Setting Name="Auth0ApiSecret" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://spd.auth0.com/</Value>
+    </Setting>
+    <Setting Name="Auth0ApiIdentifier" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://spd.auth0.com/api/v2/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

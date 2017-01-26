@@ -31,5 +31,41 @@ namespace Api.Properties {
                 return ((string)(this["DBConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Development")]
+        public string Environment {
+            get {
+                return ((string)(this["Environment"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://spd.auth0.com/")]
+        public string Auth0Domain {
+            get {
+                return ((string)(this["Auth0Domain"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://spd.auth0.com/")]
+        public string Auth0ApiSecret {
+            get {
+                return ((string)(this["Auth0ApiSecret"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://spd.auth0.com/api/v2/")]
+        public string Auth0ApiIdentifier {
+            get {
+                return ((string)(this["Auth0ApiIdentifier"]));
+            }
+        }
     }
 }
