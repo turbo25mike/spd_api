@@ -19,26 +19,26 @@ namespace Api
             appBuilder.UseCors(CorsOptions.AllowAll); //must be first
 
             //Auth0 authentication
-            var keyResolver = new OpenIdConnectSigningKeyResolver(Properties.Settings.Default.Auth0Domain);
-            appBuilder.UseJwtBearerAuthentication(
-                new JwtBearerAuthenticationOptions
-                {
-                    AuthenticationMode = AuthenticationMode.Active,
-                    TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidAudience = Properties.Settings.Default.Auth0ApiIdentifier,
-                        ValidIssuer = Properties.Settings.Default.Auth0Domain,
-                        IssuerSigningKeyResolver = (token, securityToken, identifier, parameters) => keyResolver.GetSigningKey(identifier)
-                    },
-                    Provider = new OAuthBearerAuthenticationProvider
-                    {
-                        OnValidateIdentity = context =>
-                        {
-                            context.Ticket.Identity.AddClaim(new Claim("foo", "var"));
-                            return Task.FromResult<object>(null);
-                        }
-                    }
-                });
+            //var keyResolver = new OpenIdConnectSigningKeyResolver(Properties.Settings.Default.Auth0Domain);
+            //appBuilder.UseJwtBearerAuthentication(
+            //    new JwtBearerAuthenticationOptions
+            //    {
+            //        AuthenticationMode = AuthenticationMode.Active,
+            //        TokenValidationParameters = new TokenValidationParameters()
+            //        {
+            //            ValidAudience = Properties.Settings.Default.Auth0ApiIdentifier,
+            //            ValidIssuer = Properties.Settings.Default.Auth0Domain,
+            //            IssuerSigningKeyResolver = (token, securityToken, identifier, parameters) => keyResolver.GetSigningKey(identifier)
+            //        },
+            //        Provider = new OAuthBearerAuthenticationProvider
+            //        {
+            //            OnValidateIdentity = context =>
+            //            {
+            //                context.Ticket.Identity.AddClaim(new Claim("foo", "var"));
+            //                return Task.FromResult<object>(null);
+            //            }
+            //        }
+            //    });
 
             var httpConfiguration = new HttpConfiguration();
             httpConfiguration.MapHttpAttributeRoutes();

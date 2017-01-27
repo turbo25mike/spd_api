@@ -56,6 +56,14 @@
       <HintPath>..\packages\Auth0.OpenIdConnectSigningKeyResolver.1.0.0\lib\net45\Auth0.Owin.OpenIdConnectSigningKeyResolver.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.Core.3.3.8\lib\net45\AWSSDK.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AWSSDK.EC2, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.EC2.3.3.6\lib\net45\AWSSDK.EC2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Enyim.Caching, Version=2.16.0.0, Culture=neutral, PublicKeyToken=cec98615db04012e, processorArchitecture=MSIL">
       <HintPath>..\packages\EnyimMemcached.2.16.0\lib\net35\Enyim.Caching.dll</HintPath>
       <Private>True</Private>
@@ -217,6 +225,9 @@
       <Project>{235772a0-497e-4645-b1ea-18f79d6e7995}</Project>
       <Name>Business</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\AWSSDK.EC2.3.3.6\analyzers\dotnet\cs\AWSSDK.EC2.CodeAnalysis.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
