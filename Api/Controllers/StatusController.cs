@@ -20,7 +20,7 @@ namespace Api.Controllers
         [Route("environment")]
         public HttpResponseMessage GetEnvironment()
         {
-            var results = string.Join(",", ConfigurationManager.AppSettings.AllKeys.Select(key => ConfigurationManager.AppSettings[key]));
+            var results = string.Join(",", Environment.GetEnvironmentVariables().Keys);
             return Request.CreateResponse(results);
         }
 
