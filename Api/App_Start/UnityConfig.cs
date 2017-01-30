@@ -20,7 +20,6 @@ namespace Api
             container.RegisterType<IDatabase, Database>();
             container.RegisterType<IErrorManager, ErrorManager>();
             container.RegisterType<IMediaRequestContext, MediaRequestContext>();
-            container.RegisterType<IConfiguration, Configuration>();
 
             config.DependencyResolver = new UnityDependencyResolver(container);
 
