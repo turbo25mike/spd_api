@@ -28,8 +28,9 @@ namespace Api
             //Register the filter injector
             config.Services.Add(typeof(IFilterProvider), new UnityFilterProvider(container));
             var providers = config.Services.GetFilterProviders().ToList();
-            var defaultprovider = providers.First(p => p is ActionDescriptorFilterProvider);
-            config.Services.Remove(typeof(IFilterProvider), defaultprovider);
+            var defaultprovider = providers.FirstOrDefault(p => p is ActionDescriptorFilterProvider);
+            if(defaultprovider != null)
+                config.Services.Remove(typeof(IFilterProvider), defaultprovider);
         }
     }
 }

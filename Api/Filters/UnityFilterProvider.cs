@@ -19,6 +19,7 @@ namespace Api.Filters
         public new IEnumerable<FilterInfo> GetFilters(HttpConfiguration configuration, HttpActionDescriptor actionDescriptor)
         {
             var filters = base.GetFilters(configuration, actionDescriptor);
+            if (filters == null) return null;
             var filterInfos = filters as FilterInfo[] ?? filters.ToArray();
             foreach (var filter in filterInfos)
                 _container.BuildUp(filter.Instance.GetType(), filter.Instance);
