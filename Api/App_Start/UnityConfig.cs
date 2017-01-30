@@ -24,7 +24,7 @@ namespace Api
             config.DependencyResolver = new UnityDependencyResolver(container);
 
             //Register global filters here
-            config.Filters.Add((IExceptionFilter)config.DependencyResolver.GetService(typeof(ExceptionHandlerAttribute)));
+            //config.Filters.Add((IExceptionFilter)config.DependencyResolver.GetService(typeof(ExceptionHandlerAttribute)));
             //Register the filter injector
             config.Services.Add(typeof(IFilterProvider), new UnityFilterProvider(container));
             var providers = config.Services.GetFilterProviders().ToList();
