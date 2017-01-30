@@ -5,6 +5,8 @@ using Api.Filters;
 using Business;
 using Microsoft.Practices.Unity;
 using Unity.WebApi;
+using IExceptionFilter = System.Web.Http.Filters.IExceptionFilter;
+using IFilterProvider = System.Web.Http.Filters.IFilterProvider;
 
 namespace Api
 {
@@ -24,13 +26,12 @@ namespace Api
             config.DependencyResolver = new UnityDependencyResolver(container);
 
             //Register global filters here
-            //config.Filters.Add((IExceptionFilter)config.DependencyResolver.GetService(typeof(ExceptionHandlerAttribute)));
+            config.Filters.Add((IExceptionFilter)config.DependencyResolver.GetService(typeof(ExceptionHandlerAttribute)));
             //Register the filter injector
             config.Services.Add(typeof(IFilterProvider), new UnityFilterProvider(container));
             var providers = config.Services.GetFilterProviders().ToList();
             var defaultprovider = providers.FirstOrDefault(p => p is ActionDescriptorFilterProvider);
-            if(defaultprovider != null)
-                config.Services.Remove(typeof(IFilterProvider), defaultprovider);
+            config.Services.Remove(typeof(IFilterProvider), defaultprovider);
         }
     }
 }
