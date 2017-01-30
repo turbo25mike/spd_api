@@ -11,10 +11,9 @@ namespace Api
             appBuilder.UseCors(CorsOptions.AllowAll); //must be first
             var httpConfiguration = new HttpConfiguration();
             httpConfiguration.MapHttpAttributeRoutes();
-            Auth0Config.Register(appBuilder);
             UnityConfig.Register(httpConfiguration);
+            Auth0Config.Register(appBuilder);
             appBuilder.UseWebApi(httpConfiguration);
-            
         }
     }
 }
