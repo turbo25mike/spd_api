@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 
 namespace Business
 {
@@ -10,6 +9,7 @@ namespace Business
 
     public class Configuration : IConfiguration
     {
-        public string DBConnectionString => Properties.Settings.Default.DBConnectionString; 
+        private const string localConnection = "SERVER=localhost;DATABASE=automap;UID=root;PASSWORD=admin;";
+        public string DBConnectionString => Environment.GetEnvironmentVariable("DB_CONNECTION") ?? localConnection; 
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Business;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using Api.Filters;
-using Api.Utils;
+using Microsoft.AspNet.Identity;
 using Microsoft.Practices.Unity;
 
 namespace Api.Controllers
@@ -15,8 +15,7 @@ namespace Api.Controllers
         [Route("")]
         public HttpResponseMessage Get()
         {
-            var currentUser = Route.GetData("user") as User;
-            return currentUser == null ? Request.CreateErrorResponse(HttpStatusCode.BadRequest, Constants.UserNotFoundError) : Request.CreateResponse(MediaRequestContext.GetMultipleByUserName(currentUser.Name));
+            return Request.CreateResponse(MediaRequestContext.GetMultipleByUserName(ClaimsPrincipal.Current.Identity.GetUserId()));
         }
 
         [Route("{id}")]
@@ -28,7 +27,5 @@ namespace Api.Controllers
 
         [Dependency]
         public IMediaRequestContext MediaRequestContext { get; set; }
-        [Dependency]
-        public IRouteManager Route { get; set; }
     }
 }

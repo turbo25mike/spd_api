@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using System.Configuration;
-using System.Reflection;
 using System.Text;
-using Microsoft.Practices.Unity;
 
 namespace Business
 {
@@ -17,23 +14,18 @@ namespace Business
 
     public enum DBTable
     {
-        media
+        Media
     }
 
     public class Database : IDatabase
     {
-        private IConfiguration _config;
-        [Dependency]
-        public IConfiguration config {
-            get { return _config; }
-            set
-            {
-                _config = value;
-                connection = new MySqlConnection(config.DBConnectionString);
-            }
+        public Database()
+        {
+            _connection = new MySqlConnection(Environment.GetEnvironmentVariable("APP_DB_CONNECTION") ?? LocalConnection);
         }
 
-        private string[] _Tables = {"media"};
+        private const string LocalConnection = "SERVER=localhost;DATABASE=automap;UID=root;PASSWORD=admin;";
+        private readonly string[] _tables = { "media" };
 
         public List<T> Select<T>(DBTable table, string whereColumns, int? count = null)
         {
@@ -41,22 +33,22 @@ namespace Business
             T obj = default(T);
 
             //Open connection
-            if (this.OpenConnection() == true)
+            if (OpenConnection())
             {
-                var where = (!String.IsNullOrEmpty(whereColumns)) ? " WHERE " + whereColumns : "";
+                var where = (!string.IsNullOrEmpty(whereColumns)) ? " WHERE " + whereColumns : "";
                 var limit = (count.HasValue) ? " LIMIT " + count.Value : "";
                 //Create Command
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM " + _Tables[table.GetHashCode()] + where + limit, connection);
+                var cmd = new MySqlCommand("SELECT * FROM " + _tables[table.GetHashCode()] + where + limit, _connection);
                 //Create a data reader and Execute the command
-                MySqlDataReader dr = cmd.ExecuteReader();
+                var dr = cmd.ExecuteReader();
 
                 //Read the data and store them in the list
                 while (dr.Read())
                 {
                     obj = Activator.CreateInstance<T>();
-                    foreach (PropertyInfo prop in obj.GetType().GetProperties())
+                    foreach (var prop in obj.GetType().GetProperties())
                     {
-                        if (!object.Equals(dr[prop.Name], DBNull.Value))
+                        if (!Equals(dr[prop.Name], DBNull.Value))
                         {
                             prop.SetValue(obj, dr[prop.Name], null);
                         }
@@ -68,7 +60,7 @@ namespace Business
                 dr.Close();
 
                 //close Connection
-                this.CloseConnection();
+                CloseConnection();
 
             }
             return list;
@@ -78,14 +70,14 @@ namespace Business
         public void Update(DBTable table, Dictionary<string, string> setColumns, KeyValuePair<string, string> whereColumn)
         {
             //Open connection
-            if (OpenConnection() == true)
+            if (OpenConnection())
             {
                 //create mysql command
                 MySqlCommand cmd = new MySqlCommand();
                 //Assign the query using CommandText
                 cmd.CommandText = "UPDATE " + table + " SET " + BuildColumns(setColumns) + " WHERE " + whereColumn.Key + "='" + whereColumn.Value + "'";
                 //Assign the connection using Connection
-                cmd.Connection = connection;
+                cmd.Connection = _connection;
 
                 //Execute query
                 cmd.ExecuteNonQuery();
@@ -97,21 +89,18 @@ namespace Business
 
         private string BuildColumns(Dictionary<string, string> columns)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (KeyValuePair<string, string> col in columns)
-            {
+            var sb = new StringBuilder();
+            foreach (var col in columns)
                 sb.Append("" + col.Key + "='" + col.Value + "',");
-            }
-            
             return sb.ToString().TrimEnd(',');
         }
 
         public void Delete(DBTable table, KeyValuePair<string, string> whereColumn)
         {
             //Open connection
-            if (this.OpenConnection() == true)
+            if (OpenConnection())
             {
-                using (MySqlCommand cmd = new MySqlCommand("DELETE from @TableName where @ColumnName = '@ColumnValue'", connection))
+                using (MySqlCommand cmd = new MySqlCommand("DELETE from @TableName where @ColumnName = '@ColumnValue'", _connection))
                 {
                     cmd.Parameters.AddWithValue("@TableName", table);
                     cmd.Parameters.AddWithValue("@ColumnName", whereColumn.Key);
@@ -121,25 +110,24 @@ namespace Business
                 }
 
                 //close Connection
-                this.CloseConnection();
+                CloseConnection();
             }
         }
 
         //open connection to database
         private bool OpenConnection()
         {
-            connection.Open();
+            _connection.Open();
             return true;
         }
 
         //Close connection
-        private bool CloseConnection()
+        private void CloseConnection()
         {
-            connection.Close();
-            return true;
+            _connection.Close();
         }
 
 
-        private MySqlConnection connection;
+        private readonly MySqlConnection _connection;
     }
 }

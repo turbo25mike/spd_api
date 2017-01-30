@@ -15,10 +15,9 @@ namespace Api.Filters
         public override void OnException(HttpActionExecutedContext context)
         {
             ErrorManager.Handle(context.Exception);
-            var statusCode = HttpStatusCode.InternalServerError;
             if (context.Exception is NotImplementedException)
                 context.Response = new HttpResponseMessage(HttpStatusCode.NotImplemented);
-            context.Response = new HttpResponseMessage(statusCode);
+            context.Response = new HttpResponseMessage(HttpStatusCode.InternalServerError);
         }
     }
 }

@@ -1,15 +1,12 @@
 using System.Linq;
 using System.Web.Http;
-using Microsoft.Practices.Unity;
 using System.Web.Http.Filters;
 using Api.Filters;
-using Api.Utils;
 using Business;
+using Microsoft.Practices.Unity;
 using Unity.WebApi;
-using IExceptionFilter = System.Web.Http.Filters.IExceptionFilter;
-using IFilterProvider = System.Web.Http.Filters.IFilterProvider;
 
-namespace Api.App_Start
+namespace Api
 {
     public static class UnityConfig
     {
@@ -23,10 +20,7 @@ namespace Api.App_Start
             container.RegisterType<IDatabase, Database>();
             container.RegisterType<IErrorManager, ErrorManager>();
             container.RegisterType<IMediaRequestContext, MediaRequestContext>();
-            container.RegisterType<IUserContext, UserContext>();
-            container.RegisterType<ICache, Cache>();
             container.RegisterType<IConfiguration, Configuration>();
-            container.RegisterType<IRouteManager, RouteManager>();
 
             config.DependencyResolver = new UnityDependencyResolver(container);
 

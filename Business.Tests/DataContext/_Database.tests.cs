@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Business;
 using Telerik.JustMock;
 
-namespace ImageServices.Tests
+namespace Business.Tests
 {
     [TestClass]
     public class DatabaseTests
@@ -15,9 +14,7 @@ namespace ImageServices.Tests
         public void Setup()
         {
             _someMessage = "testing: " + Guid.NewGuid();
-            IConfiguration _someConfig = Mock.Create<IConfiguration>();
-            Mock.Arrange(() => _someConfig.DBConnectionString).Returns(() => "SERVER=localhost;DATABASE=automap;UID=root;PASSWORD=admin;");
-            _someDatabase = new Database {config = _someConfig};
+            _someDatabase = new Database();
         }
 
         [TestMethod]
@@ -35,19 +32,19 @@ namespace ImageServices.Tests
 
         private void GivenAMessage()
         {
-            _someDatabase.Update(DBTable.media, new Dictionary<string, string>{{ "Message",_someMessage}}, new KeyValuePair<string, string>("MediaID", _someMediaID.ToString()));
+            _someDatabase.Update(DBTable.Media, new Dictionary<string, string>{{ "Message",_someMessage}}, new KeyValuePair<string, string>("MediaID", _someMediaID.ToString()));
         }
 
         private MediaRequest ThenRequest
         {
             get
             {
-                List<MediaRequest> result = _someDatabase.Select<MediaRequest>(DBTable.media, "MediaID = " + _someMediaID);
+                var result = _someDatabase.Select<MediaRequest>(DBTable.Media, "MediaID = " + _someMediaID);
                 return result[0];
             }
         }
 
-        private int _someMediaID = 1;
+        private readonly int _someMediaID = 1;
         private string _someMessage;
         private Database _someDatabase;
     }

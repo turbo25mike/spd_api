@@ -4,7 +4,7 @@ using Business;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 
-namespace ImageServices.Tests
+namespace Business.Tests
 {
     [TestClass]
     public class MediaRequestContextTests
@@ -14,7 +14,7 @@ namespace ImageServices.Tests
         {
             _someDatabase = Mock.Create<IDatabase>();
             _someRequest = new MediaRequest { MediaID = _someID };
-            Mock.Arrange(() => _someDatabase.Update(DBTable.media, Arg.IsAny<Dictionary<string, string>>(),Arg.IsAny<KeyValuePair<string, string>>()));
+            Mock.Arrange(() => _someDatabase.Update(DBTable.Media, Arg.IsAny<Dictionary<string, string>>(),Arg.IsAny<KeyValuePair<string, string>>()));
             _someRequestContext = new MediaRequestContext() { DB = _someDatabase };
         }
 
@@ -74,17 +74,17 @@ namespace ImageServices.Tests
 
         private void GivenDBReturnsMultiple()
         {
-            Mock.Arrange(() => _someDatabase.Select<MediaRequest>(DBTable.media, Arg.AnyString, Arg.AnyInt)).Returns(() => new List<MediaRequest> { _someRequest, _someRequest });
+            Mock.Arrange(() => _someDatabase.Select<MediaRequest>(DBTable.Media, Arg.AnyString, Arg.AnyInt)).Returns(() => new List<MediaRequest> { _someRequest, _someRequest });
         }
 
         private void GivenDBReturnsOne()
         {
-            Mock.Arrange(() => _someDatabase.Select<MediaRequest>(DBTable.media, Arg.AnyString, Arg.AnyInt)).Returns(() => new List<MediaRequest> { _someRequest });
+            Mock.Arrange(() => _someDatabase.Select<MediaRequest>(DBTable.Media, Arg.AnyString, Arg.AnyInt)).Returns(() => new List<MediaRequest> { _someRequest });
         }
 
         private void GivenDBReturnsNull()
         {
-            Mock.Arrange(() => _someDatabase.Select<MediaRequest>(DBTable.media, Arg.AnyString, Arg.AnyInt)).Returns(() => null);
+            Mock.Arrange(() => _someDatabase.Select<MediaRequest>(DBTable.Media, Arg.AnyString, Arg.AnyInt)).Returns(() => null);
         }
 
         private MediaRequest ThenSomeRequest => _someRequest;

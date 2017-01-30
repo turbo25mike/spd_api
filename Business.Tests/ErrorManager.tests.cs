@@ -1,10 +1,9 @@
 ﻿using System;
 using FluentAssertions;
-using Business;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Telerik.JustMock;
 
-namespace ImageServices.Tests
+namespace Business.Tests
 {
     [TestClass]
     public class ErrorManagerTests

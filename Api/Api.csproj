@@ -184,7 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="Controllers\SqlTestController.cs" />
     <Compile Include="Controllers\MediaRequestController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Filters\ExceptionHandlerAttribute.cs" />
@@ -197,8 +196,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Utils\Cache.cs" />
-    <Compile Include="Utils\RouteManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

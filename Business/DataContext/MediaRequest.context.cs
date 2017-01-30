@@ -15,11 +15,11 @@ namespace Business
     {
         public List<MediaRequest> GetAll()
         {
-            return DB.Select<MediaRequest>(DBTable.media);
+            return DB.Select<MediaRequest>(DBTable.Media);
         }
         public MediaRequest GetByID(int id)
         {
-            List<MediaRequest> results = DB.Select<MediaRequest>(DBTable.media, "MediaID = " + id, 1);
+            List<MediaRequest> results = DB.Select<MediaRequest>(DBTable.Media, "MediaID = " + id, 1);
             if (results != null && results.Any())
             {
                 return results[0];
@@ -29,14 +29,14 @@ namespace Business
 
         public List<MediaRequest> GetMultipleByUserName(string userName)
         {
-            List<MediaRequest> results = DB.Select<MediaRequest>(DBTable.media, "SenderID = '" + userName + "'");
+            List<MediaRequest> results = DB.Select<MediaRequest>(DBTable.Media, "SenderID = '" + userName + "'");
             return results;
         }
 
 
         public bool Save(MediaRequest request)
         {
-            DB.Update(DBTable.media, BuildDictionary(), new KeyValuePair<string, string>("MediaID", request.MediaID.ToString()));
+            DB.Update(DBTable.Media, BuildDictionary(), new KeyValuePair<string, string>("MediaID", request.MediaID.ToString()));
             return true;
         }
 

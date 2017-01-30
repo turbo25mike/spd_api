@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
@@ -20,18 +17,8 @@ namespace Api.Controllers
 
         [Route("environment")]
         public HttpResponseMessage GetEnvironment()
-        {
-            var results = "";
-            foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
-                results += $"{de.Key}:{de.Value}";
-
-            return Request.CreateResponse(results);
-        }
-
-        [Route("exception")]
-        public HttpResponseMessage GetException()
-        {
-            throw new Exception();
+        { 
+            return Request.CreateResponse(Environment.GetEnvironmentVariable("APP_ENVIRONMENT") ?? "Development");
         }
 
         [Authorize]
