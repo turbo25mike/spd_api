@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Configuration;
 using System.Linq;
 using System.Net.Http;
@@ -20,7 +21,10 @@ namespace Api.Controllers
         [Route("environment")]
         public HttpResponseMessage GetEnvironment()
         {
-            var results = string.Join(",", Environment.GetEnvironmentVariables().Keys);
+            var results = "";
+            foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
+                results += $"{de.Key}:{de.Value}";
+
             return Request.CreateResponse(results);
         }
 
