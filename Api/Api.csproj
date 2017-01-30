@@ -183,6 +183,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Auth0Config.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\MediaRequestController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
@@ -199,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Data\seed.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -226,6 +228,7 @@
   <ItemGroup>
     <Analyzer Include="..\packages\AWSSDK.EC2.3.3.6\analyzers\dotnet\cs\AWSSDK.EC2.CodeAnalysis.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
