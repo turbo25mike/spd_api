@@ -11,17 +11,18 @@ namespace Api
     {
         public static void Register(IAppBuilder appBuilder)
         {
-            var issuer = Environment.GetEnvironmentVariable("AUTH0_DOMAIN") ?? "https://spd.auth0.com/";
+            var domain = Environment.GetEnvironmentVariable("AUTH0_DOMAIN") ?? "https://spd.auth0.com/";
             var audience = Environment.GetEnvironmentVariable("AUTH0_CLIENT_IDS") ?? "VRuQOIlWkBs3WEwjwafACwuY43tWZ5Tn";
-            var keyResolver = new OpenIdConnectSigningKeyResolver(issuer);
+            var keyResolver = new OpenIdConnectSigningKeyResolver(domain);
             appBuilder.UseJwtBearerAuthentication(
                 new JwtBearerAuthenticationOptions
                 {
                     AuthenticationMode = AuthenticationMode.Active,
+                    AllowedAudiences = new[] { audience },
                     TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidAudience = audience,
-                        ValidIssuer = issuer,
+                        ValidIssuer = domain,
                         IssuerSigningKeyResolver = (token, securityToken, identifier, parameters) => keyResolver.GetSigningKey(identifier)
                     }
                 });
